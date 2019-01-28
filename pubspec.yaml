@@ -7,8 +7,8 @@ description:
   iOS not supported
 version: 0.1.0
 author: Nadia Ghebreial Nieto <nadiagnieto@gmail.com>
-homepage: https://github.com/NGhebreial/flutter_image_share
-repository: https://github.com/NGhebreial/flutter_image_share
+homepage: https://github.com/NGhebreial/flutter_exif_rotation
+repository: https://github.com/NGhebreial/flutter_exif_rotation
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
