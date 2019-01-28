@@ -5,7 +5,7 @@ description:
   in portrait. This plugin fixes the orientation for pictures taken with those devices.
   Android supported
   iOS not supported
-version: 0.1.0
+version: 0.1.1
 author: Nadia Ghebreial Nieto <nadiagnieto@gmail.com>
 homepage: https://github.com/NGhebreial/flutter_exif_rotation
 repository: https://github.com/NGhebreial/flutter_exif_rotation
