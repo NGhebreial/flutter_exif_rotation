@@ -1,4 +1,4 @@
-# Share image for flutter
+# Fix exif rotation for flutter
 
 Flutter plugin that fixes the picture orientation for some devices.
 In some devices the exif data shows picture in landscape mode when they're actually in portrait. 
