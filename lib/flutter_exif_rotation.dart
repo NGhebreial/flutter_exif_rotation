@@ -8,23 +8,16 @@ class FlutterExifRotation {
   static const MethodChannel _channel =
       const MethodChannel('flutter_exif_rotation');
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
-
+  /// Get the [path] of the image that is stored on the device
+  /// return the [File] with the exif data fixed
   static Future<File> rotateImage({@required String path}) async {
     assert(path != null);
 
     String filePath = await _channel.invokeMethod(
       'rotateImage',
-      <String, dynamic>{
-        'path': path
-      },
+      <String, dynamic>{'path': path},
     );
-    debugPrint("Rotated filePath:" + filePath);
 
     return new File(filePath);
   }
-
 }

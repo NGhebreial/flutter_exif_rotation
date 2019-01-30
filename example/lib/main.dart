@@ -7,11 +7,13 @@ import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 
 void main() => runApp(MyApp());
 
+/// The stateful widget
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
 
+/// The class with the scaffold
 class _MyAppState extends State<MyApp> {
   File _image;
 
