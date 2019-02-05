@@ -7,12 +7,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import androidx.core.app.ActivityCompat;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
