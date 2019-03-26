@@ -1,3 +1,7 @@
+## 0.2.1
+
+* Fixed bug on permissions
+
 ## 0.2.0
 
 * Migrate to AndroidX on android support library. 

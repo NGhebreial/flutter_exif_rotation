@@ -34,5 +34,5 @@ android {
 }
 
 dependencies {
-    api 'androidx.legacy:legacy-support-v4:1.0.0'
+    api 'androidx.core:core:1.0.0'
 }

@@ -13,6 +13,15 @@ Every version of Android is supported and iOS is on the way.
 
 Add `flutter_exif_rotation` as a dependency in your `pubsec.yaml`
 
+### Android
+
+Add this in your `AndroidManifest.xml`
+
+```xml
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+```
+
 ### Example
 
 ```dart
