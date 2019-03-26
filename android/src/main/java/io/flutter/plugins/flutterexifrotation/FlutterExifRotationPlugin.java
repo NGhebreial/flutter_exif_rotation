@@ -56,15 +56,22 @@ public class FlutterExifRotationPlugin implements MethodCallHandler {
         }
     }
 
+
     public void rotateImage(MethodCall call, Result result) throws IOException {
 
         if (ActivityCompat.checkSelfPermission(registrar.activity().getApplicationContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(registrar.activity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 2344);
-        }
+                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+                ||
+                ActivityCompat.checkSelfPermission(registrar.activity().getApplicationContext(),
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
 
+            ActivityCompat.requestPermissions(registrar.activity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2344);
+            return;
+        }
         String photoPath = call.argument("path");
         ExifInterface ei = new ExifInterface(photoPath);
+
         int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
                 ExifInterface.ORIENTATION_UNDEFINED);
 
@@ -72,7 +79,6 @@ public class FlutterExifRotationPlugin implements MethodCallHandler {
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
         Bitmap bitmap = BitmapFactory.decodeFile(photoPath, options);
-
 
         Bitmap rotatedBitmap = null;
         switch (orientation) {
@@ -93,6 +99,8 @@ public class FlutterExifRotationPlugin implements MethodCallHandler {
             default:
                 rotatedBitmap = bitmap;
         }
+        System.out.println(rotatedBitmap.getHeight());
+        System.out.println(rotatedBitmap.getWidth());
         File file = new File(photoPath); // the File to save , append increasing numeric counter to prevent files from getting overwritten.
 
         FileOutputStream fOut = new FileOutputStream(file);

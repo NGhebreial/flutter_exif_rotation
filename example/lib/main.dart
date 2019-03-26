@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,11 +20,13 @@ class _MyAppState extends State<MyApp> {
   Future getImage() async {
     File image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
-    image = await FlutterExifRotation.rotateImage(path: image.path);
+    if (image != null) {
+      image = await FlutterExifRotation.rotateImage(path: image.path);
 
-    setState(() {
-      _image = image;
-    });
+      setState(() {
+        _image = image;
+      });
+    }
   }
 
   @override
