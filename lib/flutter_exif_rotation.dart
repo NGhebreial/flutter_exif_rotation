@@ -12,7 +12,6 @@ class FlutterExifRotation {
   /// return the [File] with the exif data fixed
   static Future<File> rotateImage({@required String path}) async {
     assert(path != null);
-
     String filePath = await _channel.invokeMethod(
       'rotateImage',
       <String, dynamic>{'path': path},

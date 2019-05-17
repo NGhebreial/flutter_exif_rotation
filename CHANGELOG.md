@@ -1,3 +1,7 @@
+## 0.2.2
+
+* Fixed the way of request the permissions
+
 ## 0.2.1
 
 * Fixed bug on permissions

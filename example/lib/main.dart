@@ -20,12 +20,14 @@ class _MyAppState extends State<MyApp> {
   Future getImage() async {
     File image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
-    if (image != null) {
+    if (image.path != null) {
       image = await FlutterExifRotation.rotateImage(path: image.path);
 
-      setState(() {
-        _image = image;
-      });
+      if (image != null) {
+        setState(() {
+          _image = image;
+        });
+      }
     }
   }
 
