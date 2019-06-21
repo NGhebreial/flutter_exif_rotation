@@ -1,3 +1,7 @@
+## 0.2.3
+
+* Fixed bug that makes the app crash when deny the permissions 
+
 ## 0.2.2
 
 * Fixed the way of request the permissions

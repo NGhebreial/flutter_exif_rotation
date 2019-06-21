@@ -77,7 +77,6 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
     public void onMethodCall(MethodCall call, Result result) {
         this.result = result;
         this.call = call;
-
         if (call.method.equals("getPlatformVersion")) {
             result.success("Android " + android.os.Build.VERSION.RELEASE);
         } else if (call.method.equals("rotateImage")) {
@@ -95,7 +94,9 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
         switch (requestCode) {
             case REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION:
                 if (permissionGranted) {
-                    launchRotateImage();
+                    if (this.call != null)
+                        launchRotateImage();
+                    return true;
                 }
                 break;
 
@@ -104,7 +105,6 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
         }
 
         if (!permissionGranted) {
-            result.success(null);
             return false;
         }
 
