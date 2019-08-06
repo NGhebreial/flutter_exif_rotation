@@ -130,6 +130,7 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
 
     public void launchRotateImage() {
         String photoPath = call.argument("path");
+        Boolean save = call.argument("save");
 
         int orientation = 0;
         try {
@@ -171,7 +172,8 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
             fOut.flush(); // Not really required
             fOut.close(); // do not forget to close the stream
 
-            MediaStore.Images.Media.insertImage(registrar.activity().getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
+            if( save )
+                MediaStore.Images.Media.insertImage(registrar.activity().getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
 
             result.success(file.getPath());
         } catch (IOException e) {

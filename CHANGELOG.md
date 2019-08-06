@@ -1,3 +1,7 @@
+## 0.2.4
+
+* Added new method that returns the file without saving it in the gallery
+
 ## 0.2.3
 
 * Fixed bug that makes the app crash when deny the permissions 

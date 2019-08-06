@@ -26,12 +26,13 @@ Add this in your `AndroidManifest.xml`
 ### Example
 
 ```dart
-import 'package:flutter/material.dart';
+
 import 'dart:async';
 import 'dart:io';
 
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() => runApp(MyApp());
 
@@ -45,11 +46,28 @@ class _MyAppState extends State<MyApp> {
 
   Future getImage() async {
     File image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    image = await FlutterExifRotation.rotateImage(path: image.path);
+    if (image != null && image.path != null) {
+      image = await FlutterExifRotation.rotateImage(path: image.path);
 
-    setState(() {
-      _image = image;
-    });
+      if (image != null) {
+        setState(() {
+          _image = image;
+        });
+      }
+    }
+  }
+
+  Future getImageAndSave() async {
+    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    if (image != null && image.path != null) {
+      image = await FlutterExifRotation.rotateAndSaveImage(path: image.path);
+
+      if (image != null) {
+        setState(() {
+          _image = image;
+        });
+      }
+    }
   }
 
   @override
@@ -69,14 +87,22 @@ class _MyAppState extends State<MyApp> {
               ? new Text('No image selected.')
               : new Image.file(_image),
         ),
-        floatingActionButton: new FloatingActionButton(
-          onPressed: getImage,
-          tooltip: 'Pick Image',
-          child: new Icon(Icons.add),
-        ),
+        persistentFooterButtons: <Widget>[
+          new FloatingActionButton(
+            onPressed: getImageAndSave,
+            tooltip: 'Pick Image and save',
+            child: new Icon(Icons.save),
+          ),
+          new FloatingActionButton(
+            onPressed: getImage,
+            tooltip: 'Pick Image without saving',
+            child: new Icon(Icons.add),
+          ),
+        ],
       ),
     );
   }
 }
+
 ```
 
