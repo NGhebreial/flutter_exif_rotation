@@ -36,7 +36,7 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
     private final PermissionManager permissionManager;
 
 
-    static final int REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION = 2344;
+    static final int REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION = 23483;
 
     interface PermissionManager {
         boolean isPermissionGranted(String permissionName);
