@@ -4,9 +4,9 @@
 Pod::Spec.new do |s|
   s.name             = 'flutter_exif_rotation'
   s.version          = '0.0.1'
-  s.summary          = 'A new flutter plugin project.'
+  s.summary          = 'A new Flutter plugin to fixed rorartion of image in android or ios both.'
   s.description      = <<-DESC
-A new flutter plugin project.
+A new Flutter plugin to fixed rorartion of image in android or ios both.
                        DESC
   s.homepage         = 'http://example.com'
   s.license          = { :file => '../LICENSE' }

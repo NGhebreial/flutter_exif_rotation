@@ -1,3 +1,7 @@
+## 0.2.5
+
+* Added iOS code made by @Bhagatcliffex 
+
 ## 0.2.4
 
 * Added new method that returns the file without saving it in the gallery
