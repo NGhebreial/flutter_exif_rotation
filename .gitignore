@@ -35,6 +35,13 @@ doc/api/
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
 
+.idea/codeStyles/Project.xml
+.idea/libraries/Dart_SDK.xml
+.idea/libraries/Flutter_Plugins.xml
+.idea/modules.xml
+.idea/workspace.xml
+
+
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
