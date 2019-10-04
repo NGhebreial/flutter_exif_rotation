@@ -1,14 +1,128 @@
-# flutter_exif_rotation
+# Fix exif rotation for flutter
 
-A new Flutter plugin to fixed rorartion of image in android or ios both.
+[![pub package](https://img.shields.io/pub/v/flutter_exif_rotation.svg)](https://pub.dartlang.org/packages/flutter_exif_rotation)
 
-## Getting Started
+Flutter plugin that fixes the picture orientation for some devices.
+In some devices the exif data shows picture in landscape mode when they're actually in portrait. 
+This plugin fixes the orientation for pictures taken with those devices.
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+Every version of Android is supported.
+iOS implemented by @Bhagatcliffex 
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+
+## Installation
+
+Add `flutter_exif_rotation` as a dependency in your `pubsec.yaml`
+
+### Android
+
+Add this in your `AndroidManifest.xml`
+
+```xml
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+```
+
+### Example
+
+```dart
+
+import 'dart:async';
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
+import 'package:image_picker/image_picker.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  File _image;
+
+  Future getImage() async {
+    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    if (image != null && image.path != null) {
+      image = await FlutterExifRotation.rotateImage(path: image.path);
+
+      if (image != null) {
+        setState(() {
+          _image = image;
+        });
+      }
+    }
+  }
+
+  Future getImageAndSave() async {
+    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    if (image != null && image.path != null) {
+
+      // Note : iOS not implemented
+      image = await FlutterExifRotation.rotateAndSaveImage(path: image.path);
+
+      if (image != null) {
+        setState(() {
+          _image = image;
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Exif flutter rotation image example app'),
+        ),
+        body: new Center(
+          child: _image == null
+              ? new Text('No image selected.')
+              : new Image.file(_image),
+        ),
+        persistentFooterButtons: <Widget>[
+          new FloatingActionButton(
+            onPressed: getImageAndSave,
+            tooltip: 'Pick Image and save',
+            child: new Icon(Icons.save),
+          ),
+          new FloatingActionButton(
+            onPressed: getImage,
+            tooltip: 'Pick Image without saving',
+            child: new Icon(Icons.add),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+```
+### Note
+
+If you created project in objc, you need additional steps.
+`ios/Podfile`
+
+```yaml
+target 'Runner' do
+  __use_frameworks!__
+  ...
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+      __config.build_settings['SWIFT_VERSION'] = '4'__
+    end
+  end
+end
+```
