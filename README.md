@@ -114,14 +114,14 @@ If you created project in objc, you need additional steps.
 
 ```yaml
 target 'Runner' do
-  __use_frameworks!__
+  **use_frameworks!**
   ...
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
       config.build_settings['ENABLE_BITCODE'] = 'NO'
-      __config.build_settings['SWIFT_VERSION'] = '4'__
+      **config.build_settings['SWIFT_VERSION'] = '4'**
     end
   end
 end
