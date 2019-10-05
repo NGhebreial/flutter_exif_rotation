@@ -1,3 +1,5 @@
-## 0.0.1
+## 0.2.5
 
-* TODO: Describe initial release.
+* Added iOS code made by @Bhagatcliffex 
+
+## 0.2.4

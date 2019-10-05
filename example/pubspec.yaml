@@ -16,7 +16,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+    
+  image_picker: ^0.6.1+4
   flutter_exif_rotation:
     path: ../
 
