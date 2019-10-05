@@ -1,51 +1,43 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'dart:async';
+
+import 'package:flutter/services.dart';
 import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
-import 'package:image_picker/image_picker.dart';
 
 void main() => runApp(MyApp());
 
-/// The stateful widget
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
 
-/// The class with the scaffold
 class _MyAppState extends State<MyApp> {
-  File _image;
-
-  Future getImage() async {
-    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    if (image != null && image.path != null) {
-      image = await FlutterExifRotation.rotateImage(path: image.path);
-
-      if (image != null) {
-        setState(() {
-          _image = image;
-        });
-      }
-    }
-  }
-
-  Future getImageAndSave() async {
-    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    if (image != null && image.path != null) {
-      image = await FlutterExifRotation.rotateAndSaveImage(path: image.path);
-
-      if (image != null) {
-        setState(() {
-          _image = image;
-        });
-      }
-    }
-  }
+  String _platformVersion = 'Unknown';
 
   @override
   void initState() {
     super.initState();
+    initPlatformState();
+  }
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlatformState() async {
+    String platformVersion;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      platformVersion = await FlutterExifRotation.platformVersion;
+    } on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      _platformVersion = platformVersion;
+    });
   }
 
   @override
@@ -53,25 +45,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Exif flutter rotation image example app'),
+          title: const Text('Plugin example app'),
         ),
-        body: new Center(
-          child: _image == null
-              ? new Text('No image selected.')
-              : new Image.file(_image),
+        body: Center(
+          child: Text('Running on: $_platformVersion\n'),
         ),
-        persistentFooterButtons: <Widget>[
-          new FloatingActionButton(
-            onPressed: getImageAndSave,
-            tooltip: 'Pick Image and save',
-            child: new Icon(Icons.save),
-          ),
-          new FloatingActionButton(
-            onPressed: getImage,
-            tooltip: 'Pick Image without saving',
-            child: new Icon(Icons.add),
-          ),
-        ],
       ),
     );
   }

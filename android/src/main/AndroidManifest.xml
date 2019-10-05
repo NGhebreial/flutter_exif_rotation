@@ -1,1 +1,3 @@
-<manifest package="io.flutter.plugins.flutterexifrotation"></manifest>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.cliffex.flutter_exif_rotation">
+</manifest>

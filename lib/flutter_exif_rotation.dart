@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -8,6 +9,12 @@ class FlutterExifRotation {
   static const MethodChannel _channel =
       const MethodChannel('flutter_exif_rotation');
 
+  static Future<String> get platformVersion async {
+    final String version = await _channel.invokeMethod('getPlatformVersion');
+    return version;
+  }
+
+
   /// Get the [path] of the image and fix the orientation.
   /// Return the [File] with the exif data fixed
   static Future<File> rotateImage({@required String path}) async {
@@ -16,7 +23,7 @@ class FlutterExifRotation {
       'rotateImage',
       <String, dynamic>{'path': path, 'save': false},
     );
-
+    print("rotateImage return path: $filePath");
     return new File(filePath);
   }
 
@@ -29,7 +36,9 @@ class FlutterExifRotation {
       'rotateImage',
       <String, dynamic>{'path': path, 'save': true},
     );
+    print("rotateAndSaveImage return path: $filePath");
 
     return new File(filePath);
   }
+
 }
