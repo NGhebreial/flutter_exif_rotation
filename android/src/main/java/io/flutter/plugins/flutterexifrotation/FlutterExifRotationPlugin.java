@@ -1,4 +1,4 @@
-package com.cliffex.flutter_exif_rotation;
+package io.flutter.plugins.flutterexifrotation;
 
 import android.Manifest;
 import android.app.Activity;
@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.provider.MediaStore;
-import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
 
@@ -27,6 +26,8 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
  * FlutterExifRotationPlugin
  */
 public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegistry.RequestPermissionsResultListener {
+
+
     private final Registrar registrar;
 
     private Result result;
@@ -35,8 +36,7 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
     private final PermissionManager permissionManager;
 
 
-    static final int REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION = 2344;
-
+    static final int REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION = 23483;
 
     interface PermissionManager {
         boolean isPermissionGranted(String permissionName);
@@ -116,7 +116,7 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
 
         if (!permissionManager.isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE) ||
                 !permissionManager.isPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            Log.w("rotateImage", "rotate image request permission");
+
             permissionManager.askForPermission(new String[]{
                             Manifest.permission.READ_EXTERNAL_STORAGE,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE},
@@ -172,12 +172,11 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
             fOut.flush(); // Not really required
             fOut.close(); // do not forget to close the stream
 
-            if (save)
+            if( save )
                 MediaStore.Images.Media.insertImage(registrar.activity().getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
 
             result.success(file.getPath());
         } catch (IOException e) {
-            Log.w("rotateImage error", e.getMessage() + "");
             result.error("error", "IOexception", null);
             e.printStackTrace();
         }
@@ -190,5 +189,4 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
                 matrix, true);
     }
-
 }
