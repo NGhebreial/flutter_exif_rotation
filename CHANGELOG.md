@@ -1,3 +1,7 @@
+## 0.2.7
+
+* Some iOS fix 
+
 ## 0.2.6
 
 * Some iOS fix 
