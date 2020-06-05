@@ -9,12 +9,16 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.provider.MediaStore;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.embedding.engine.plugins.activity.ActivityAware;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -25,34 +29,48 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 /**
  * FlutterExifRotationPlugin
  */
-public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegistry.RequestPermissionsResultListener {
-
-
-    private final Registrar registrar;
+public class FlutterExifRotationPlugin implements FlutterPlugin, MethodCallHandler, PluginRegistry.RequestPermissionsResultListener, ActivityAware {
 
     private Result result;
     private MethodCall call;
+    private MethodChannel methodChannel;
 
-    private final PermissionManager permissionManager;
+    private Activity activity;
 
+    private PermissionManager permissionManager;
 
     static final int REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION = 23483;
 
     interface PermissionManager {
         boolean isPermissionGranted(String permissionName);
-
         void askForPermission(String[] permissions, int requestCode);
     }
 
-    public FlutterExifRotationPlugin(Registrar registrar, final Activity activity) {
+    public static void registerWith(Registrar registrar) {
+        final MethodChannel channel = new MethodChannel(registrar.messenger(), "flutter_exif_rotation");
+        FlutterExifRotationPlugin flutterExifRotationPlugin = new FlutterExifRotationPlugin();
+        channel.setMethodCallHandler(flutterExifRotationPlugin);
+        registrar.addRequestPermissionsResultListener(flutterExifRotationPlugin);
+    }
 
-        this.registrar = registrar;
+    @Override
+    public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
+        methodChannel = new MethodChannel(binding.getBinaryMessenger(), "flutter_exif_rotation");
+        methodChannel.setMethodCallHandler(this);
+    }
 
+    @Override
+    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        methodChannel = null;
+    }
+
+    @Override
+    public void onAttachedToActivity(@NonNull final ActivityPluginBinding activityPluginBinding) {
+        activity = activityPluginBinding.getActivity();
         permissionManager = new PermissionManager() {
             @Override
             public boolean isPermissionGranted(String permissionName) {
-                return ActivityCompat.checkSelfPermission(activity, permissionName)
-                        == PackageManager.PERMISSION_GRANTED;
+                return ActivityCompat.checkSelfPermission(activity, permissionName) == PackageManager.PERMISSION_GRANTED;
             }
 
             @Override
@@ -63,18 +81,29 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
         };
     }
 
-    /**
-     * Plugin registration.
-     */
-    public static void registerWith(Registrar registrar) {
-        final MethodChannel channel = new MethodChannel(registrar.messenger(), "flutter_exif_rotation");
-        FlutterExifRotationPlugin flutterExifRotationPlugin = new FlutterExifRotationPlugin(registrar, registrar.activity());
-        channel.setMethodCallHandler(flutterExifRotationPlugin);
-        registrar.addRequestPermissionsResultListener(flutterExifRotationPlugin);
+    @Override
+    public void onDetachedFromActivityForConfigChanges() {
+        // TODO: the Activity your plugin was attached to was
+        // destroyed to change configuration.
+        // This call will be followed by onReattachedToActivityForConfigChanges().
     }
 
     @Override
-    public void onMethodCall(MethodCall call, Result result) {
+    public void onReattachedToActivityForConfigChanges(@NonNull final ActivityPluginBinding activityPluginBinding) {
+        activity = activityPluginBinding.getActivity();
+        // TODO: your plugin is now attached to a new Activity
+        // after a configuration change.
+    }
+
+    @Override
+    public void onDetachedFromActivity() {
+        activity = null;
+        // TODO: your plugin is no longer associated with an Activity.
+        // Clean up references.
+    }
+
+    @Override
+    public void onMethodCall(MethodCall call, @NonNull Result result) {
         this.result = result;
         this.call = call;
         if (call.method.equals("getPlatformVersion")) {
@@ -87,15 +116,14 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
     }
 
     @Override
-    public boolean onRequestPermissionsResult(
-            int requestCode, String[] permissions, int[] grantResults) {
-        boolean permissionGranted =
-                grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+    public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        boolean permissionGranted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
         switch (requestCode) {
             case REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION:
                 if (permissionGranted) {
-                    if (this.call != null)
+                    if (this.call != null) {
                         launchRotateImage();
+                    }
                     return true;
                 }
                 break;
@@ -114,14 +142,8 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
 
     public void rotateImage() {
 
-        if (!permissionManager.isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE) ||
-                !permissionManager.isPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-
-            permissionManager.askForPermission(new String[]{
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION);
-
+        if (!permissionManager.isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE) || !permissionManager.isPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            permissionManager.askForPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION);
             return;
         }
         launchRotateImage();
@@ -135,10 +157,7 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
         int orientation = 0;
         try {
             ExifInterface ei = new ExifInterface(photoPath);
-            orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_UNDEFINED);
-
-
+            orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
@@ -172,8 +191,9 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
             fOut.flush(); // Not really required
             fOut.close(); // do not forget to close the stream
 
-            if( save )
-                MediaStore.Images.Media.insertImage(registrar.activity().getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
+            if (save) {
+                MediaStore.Images.Media.insertImage(activity.getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
+            }
 
             result.success(file.getPath());
         } catch (IOException e) {
@@ -186,7 +206,7 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
     private static Bitmap rotate(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
-                matrix, true);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
+
 }

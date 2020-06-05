@@ -6,8 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 class FlutterExifRotation {
-  static const MethodChannel _channel =
-      const MethodChannel('flutter_exif_rotation');
+  static const MethodChannel _channel = const MethodChannel('flutter_exif_rotation');
 
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
