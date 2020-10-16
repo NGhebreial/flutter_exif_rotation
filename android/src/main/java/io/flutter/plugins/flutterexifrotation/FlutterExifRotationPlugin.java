@@ -89,26 +89,24 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
     @Override
     public boolean onRequestPermissionsResult(
             int requestCode, String[] permissions, int[] grantResults) {
-        boolean permissionGranted =
-                grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
-        switch (requestCode) {
-            case REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION:
+        if (requestCode == REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION) {
+            boolean permissionGranted =
+                    grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+
+            if (this.call != null && this.result != null) {
                 if (permissionGranted) {
-                    if (this.call != null)
-                        launchRotateImage();
-                    return true;
+                    launchRotateImage();
+                } else {
+                    result.error("error", "PERMISSION_DENIED", null);
+                    call = null;
+                    result = null;
                 }
-                break;
+            }
 
-            default:
-                return false;
-        }
-
-        if (!permissionGranted) {
+            return true;
+        } else {
             return false;
         }
-
-        return true;
     }
 
 
@@ -179,6 +177,9 @@ public class FlutterExifRotationPlugin implements MethodCallHandler, PluginRegis
         } catch (IOException e) {
             result.error("error", "IOexception", null);
             e.printStackTrace();
+        } finally {
+            call = null;
+            result = null;
         }
 
     }
