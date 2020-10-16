@@ -1,3 +1,11 @@
+## 0.2.8
+
+* Removed unnecessary prints by @Setti7
+* Return error if permissions are denied by @lColinDl
+* Fixes images overwriting when using multiple image picker on iOS by @bkoznov
+* Removed pubspec.lock to match Dart guidelines by @freitzzz
+* Upgraded image_picker package
+
 ## 0.2.7
 
 * Some iOS fix 

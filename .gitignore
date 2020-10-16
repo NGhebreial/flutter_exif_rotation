@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-.DS_Store
-.dart_tool/
-
-.packages
-.pub/
-
-build/
-=======
 # See https://www.dartlang.org/guides/libraries/private-files
 
 # Files and directories created by pub
@@ -16,6 +7,8 @@ build/
 build/
 # If you're building an application, you may want to check-in your pubspec.lock
 pubspec.lock
+example/pubspec.yaml
+.flutter-plugins-dependencies
 
 # Directory created by dartdoc
 # If you don't generate documentation locally you can remove this line.
@@ -99,4 +92,3 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
->>>>>>> 4d92dc5f90835ff359f6354c50e7a5e4ac764ace
