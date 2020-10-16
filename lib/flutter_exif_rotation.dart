@@ -23,7 +23,7 @@ class FlutterExifRotation {
       'rotateImage',
       <String, dynamic>{'path': path, 'save': false},
     );
-    print("rotateImage return path: $filePath");
+
     return new File(filePath);
   }
 
@@ -36,7 +36,6 @@ class FlutterExifRotation {
       'rotateImage',
       <String, dynamic>{'path': path, 'save': true},
     );
-    print("rotateAndSaveImage return path: $filePath");
 
     return new File(filePath);
   }
