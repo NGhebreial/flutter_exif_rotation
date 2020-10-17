@@ -27,7 +27,6 @@ public class SwiftFlutterExifRotationPlugin: NSObject, FlutterPlugin {
                 // let image = UIImage(named: "apple.jpg")
                 print(paths)
                 let imageData = updatedImage.jpegData(compressionQuality: 0.8); fileManager.createFile(atPath: paths as String, contents: imageData, attributes: nil)
-                
                 result (paths);
                 
             } else {

@@ -14,7 +14,6 @@ class FlutterExifRotation {
     return version;
   }
 
-
   /// Get the [path] of the image and fix the orientation.
   /// Return the [File] with the exif data fixed
   static Future<File> rotateImage({@required String path}) async {
@@ -39,5 +38,4 @@ class FlutterExifRotation {
 
     return new File(filePath);
   }
-
 }

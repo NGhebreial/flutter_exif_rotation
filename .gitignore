@@ -8,6 +8,7 @@ build/
 # If you're building an application, you may want to check-in your pubspec.lock
 pubspec.lock
 .flutter-plugins-dependencies
+flutter_export_environment.sh
 
 # Directory created by dartdoc
 # If you don't generate documentation locally you can remove this line.
@@ -91,3 +92,6 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
+.DS_Store
+.atom/
+.vscode/

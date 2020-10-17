@@ -1,3 +1,7 @@
+## 0.3.0
+
+* Plugin migration to work with Android v2 embedding by @itsmejohndoe
+
 ## 0.2.8
 
 * Removed unnecessary prints by @Setti7
