@@ -26,7 +26,6 @@ Add this in your `AndroidManifest.xml`
 ### Example
 
 ```dart
-
 import 'dart:async';
 import 'dart:io';
 
@@ -36,37 +35,40 @@ import 'package:image_picker/image_picker.dart';
 
 void main() => runApp(MyApp());
 
+/// The stateful widget
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
 
+/// The class with the scaffold
 class _MyAppState extends State<MyApp> {
   File _image;
+  final picker = ImagePicker();
 
   Future getImage() async {
-    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    final image = await picker.getImage(source: ImageSource.gallery);
     if (image != null && image.path != null) {
-      image = await FlutterExifRotation.rotateImage(path: image.path);
+      File rotatedImage =
+          await FlutterExifRotation.rotateImage(path: image.path);
 
       if (image != null) {
         setState(() {
-          _image = image;
+          _image = rotatedImage;
         });
       }
     }
   }
 
   Future getImageAndSave() async {
-    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    final image = await picker.getImage(source: ImageSource.gallery);
     if (image != null && image.path != null) {
-
-      // Note : iOS not implemented
-      image = await FlutterExifRotation.rotateAndSaveImage(path: image.path);
+      File rotatedImage =
+          await FlutterExifRotation.rotateAndSaveImage(path: image.path);
 
       if (image != null) {
         setState(() {
-          _image = image;
+          _image = rotatedImage;
         });
       }
     }

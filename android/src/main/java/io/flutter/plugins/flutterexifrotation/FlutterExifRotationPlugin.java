@@ -43,6 +43,7 @@ public class FlutterExifRotationPlugin implements FlutterPlugin, MethodCallHandl
 
     interface PermissionManager {
         boolean isPermissionGranted(String permissionName);
+
         void askForPermission(String[] permissions, int requestCode);
     }
 

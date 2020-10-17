@@ -6,13 +6,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 class FlutterExifRotation {
-  static const MethodChannel _channel = const MethodChannel('flutter_exif_rotation');
+  static const MethodChannel _channel =
+      const MethodChannel('flutter_exif_rotation');
 
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
-
 
   /// Get the [path] of the image and fix the orientation.
   /// Return the [File] with the exif data fixed
@@ -38,5 +38,4 @@ class FlutterExifRotation {
 
     return new File(filePath);
   }
-
 }
