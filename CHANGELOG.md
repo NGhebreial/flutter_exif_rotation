@@ -1,3 +1,7 @@
+## 0.3.1
+
+* iOS podspec
+
 ## 0.3.0
 
 * Plugin migration to work with Android v2 embedding by @itsmejohndoe
