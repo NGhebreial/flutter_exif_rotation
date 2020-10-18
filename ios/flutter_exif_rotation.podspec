@@ -3,19 +3,20 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'flutter_exif_rotation'
-  s.version          = '0.0.1'
-  s.summary          = 'A new Flutter plugin to fixed rorartion of image in android or ios both.'
+  s.version          = '0.3.0'
+  s.summary          = 'Flutter plugin that fixes the picture orientation'
   s.description      = <<-DESC
-A new Flutter plugin to fixed rorartion of image in android or ios both.
+    Flutter plugin that fixes the picture orientation when taken in landscape for some devices.
                        DESC
-  s.homepage         = 'http://example.com'
-  s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
-  s.source           = { :path => '.' }
+  s.homepage         = 'https://github.com/NGhebreial/flutter_exif_rotation'
+  s.license          = { :type => 'BSD' }
+  s.author           = { 'Nadia Ghebreial' => 'nadiagnieto@gmail.com' }
+  s.source           = { :git => 'https://github.com/NGhebreial/flutter_exif_rotation.git', :tag => 'v0.3.0' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '14.0'
+  s.swift_version = '5.3'
 end
 

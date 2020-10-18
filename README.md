@@ -7,7 +7,7 @@ In some devices the exif data shows picture in landscape mode when they're actua
 This plugin fixes the orientation for pictures taken with those devices.
 
 Every version of Android is supported.
-iOS implemented by @Bhagatcliffex 
+iOS implemented by @Bhagatcliffex and currently supported
 
 
 ## Installation
@@ -109,22 +109,3 @@ class _MyAppState extends State<MyApp> {
 }
 
 ```
-### Note
-
-If you created project in objc, you need additional steps.
-`ios/Podfile`
-
-<pre>
-target 'Runner' do
-  <b>use_frameworks!</b>
-  ...
-
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['ENABLE_BITCODE'] = 'NO'
-      <b>config.build_settings['SWIFT_VERSION'] = '4'</b>
-    end
-  end
-end
-</pre>
