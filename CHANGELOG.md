@@ -1,3 +1,7 @@
+## 0.3.2
+
+* iOS podspec deployment target set to 8.0
+
 ## 0.3.1
 
 * iOS podspec
