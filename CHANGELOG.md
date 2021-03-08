@@ -1,3 +1,7 @@
+## 0.4.0
+
+* Upgraded dart to 2.12, image_picker to 0.7.2 by @dvaldivia
+
 ## 0.3.2
 
 * iOS podspec deployment target set to 8.0

@@ -21,7 +21,7 @@ class FlutterExifRotation {
     String filePath = await (_channel.invokeMethod(
       'rotateImage',
       <String, dynamic>{'path': path, 'save': false},
-    ) as FutureOr<String>);
+    ));
 
     return new File(filePath);
   }
@@ -34,7 +34,7 @@ class FlutterExifRotation {
     String filePath = await (_channel.invokeMethod(
       'rotateImage',
       <String, dynamic>{'path': path, 'save': true},
-    ) as FutureOr<String>);
+    ));
 
     return new File(filePath);
   }
