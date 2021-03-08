@@ -3,7 +3,7 @@ description: Demonstrates how to use the flutter_exif_rotation plugin.
 publish_to: 'none'
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
   flutter: ">=1.13.0 <2.0.0"
 
 dependencies:
@@ -18,7 +18,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  image_picker: ^0.6.7+12
+  image_picker: ^0.7.2
   flutter_exif_rotation:
     path: ../
 
