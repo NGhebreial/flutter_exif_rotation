@@ -1,6 +1,7 @@
 ## 0.4.0
 
-* Upgraded dart to 2.12, image_picker to 0.7.2 by @dvaldivia
+* Upgraded image_picker to 0.7.2 and dart to 2.12 by @dvaldivia
+* Using null safety
 
 ## 0.3.2
 
