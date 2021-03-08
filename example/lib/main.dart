@@ -15,7 +15,7 @@ class MyApp extends StatefulWidget {
 
 /// The class with the scaffold
 class _MyAppState extends State<MyApp> {
-  File _image;
+  File? _image;
   final picker = ImagePicker();
 
   Future getImage() async {
@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
         body: new Center(
           child: _image == null
               ? new Text('No image selected.')
-              : new Image.file(_image),
+              : new Image.file(_image!),
         ),
         persistentFooterButtons: <Widget>[
           new FloatingActionButton(
