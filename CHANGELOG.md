@@ -1,3 +1,7 @@
+## 0.4.1
+
+* Buxfix #38
+
 ## 0.4.0
 
 * Upgraded image_picker to 0.7.2 and dart to 2.12 by @dvaldivia
