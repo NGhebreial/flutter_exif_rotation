@@ -142,18 +142,26 @@ public class FlutterExifRotationPlugin implements FlutterPlugin, MethodCallHandl
 
 
     public void rotateImage() {
+        Boolean internalFile = argument(call, "internalFile", false);
 
-        if (!permissionManager.isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE) || !permissionManager.isPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            permissionManager.askForPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION);
+        if (!internalFile
+                && (!permissionManager.isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE)
+                || !permissionManager.isPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE))) {
+
+            permissionManager.askForPermission(
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION
+            );
+
             return;
         }
         launchRotateImage();
 
     }
 
-    public void launchRotateImage() {
+    private void launchRotateImage() {
         String photoPath = call.argument("path");
-        Boolean save = call.argument("save");
+        Boolean save = argument(call, "save", false);
 
         int orientation = 0;
         try {
@@ -213,4 +221,11 @@ public class FlutterExifRotationPlugin implements FlutterPlugin, MethodCallHandl
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
+    private static <T> T argument(MethodCall call, String key, T defaultValue) {
+        if (!call.hasArgument(key)) {
+            return defaultValue;
+        }
+
+        return call.argument(key);
+    }
 }
