@@ -1,3 +1,7 @@
+## 0.4.2
+
+* Added use without permissions by @antondudakov
+
 ## 0.4.1
 
 * Buxfix #38
