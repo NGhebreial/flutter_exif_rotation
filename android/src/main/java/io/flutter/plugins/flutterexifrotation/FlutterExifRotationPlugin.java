@@ -110,7 +110,7 @@ public class FlutterExifRotationPlugin implements FlutterPlugin, MethodCallHandl
         if (call.method.equals("getPlatformVersion")) {
             result.success("Android " + android.os.Build.VERSION.RELEASE);
         } else if (call.method.equals("rotateImage")) {
-            rotateImage();
+            launchRotateImage();
         } else {
             result.notImplemented();
         }
@@ -138,25 +138,6 @@ public class FlutterExifRotationPlugin implements FlutterPlugin, MethodCallHandl
         }
 
         return true;
-    }
-
-
-    public void rotateImage() {
-        Boolean internalFile = argument(call, "internalFile", false);
-
-        if (!internalFile
-                && (!permissionManager.isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE)
-                || !permissionManager.isPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE))) {
-
-            permissionManager.askForPermission(
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION
-            );
-
-            return;
-        }
-        launchRotateImage();
-
     }
 
     private void launchRotateImage() {

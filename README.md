@@ -13,11 +13,6 @@ iOS implemented by @Bhagatcliffex and currently supported
 
 Add this in your `AndroidManifest.xml` (you don't need these permissions in case when you manipulate files from internal storage only (file are stored inside the app's directory ( /data/data/{your package}/ )) )
 
-```xml
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-```
-
 ### Example
 
 ```dart

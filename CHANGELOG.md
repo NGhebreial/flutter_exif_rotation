@@ -1,3 +1,7 @@
+## 0.4.3
+
+* Fixed permissions to make it work when tested for the first time
+
 ## 0.4.2
 
 * Added use without permissions by @antondudakov
