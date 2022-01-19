@@ -1,3 +1,8 @@
+## 0.5.0
+
+* Migration to Kotlin implemented by @paricleu
+* SDK min version to 2.14.0
+
 ## 0.4.3
 
 * Fixed permissions to make it work when tested for the first time
