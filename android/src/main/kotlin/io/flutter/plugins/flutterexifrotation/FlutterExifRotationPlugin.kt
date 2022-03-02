@@ -10,17 +10,17 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
+import kotlinx.coroutines.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 /**
  * FlutterExifRotationPlugin
  */
 class FlutterExifRotationPlugin : FlutterPlugin, MethodCallHandler {
     private var applicationContext: Context? = null
+    private val mainScope = CoroutineScope(Dispatchers.Main)
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         applicationContext = binding.applicationContext
@@ -33,16 +33,16 @@ class FlutterExifRotationPlugin : FlutterPlugin, MethodCallHandler {
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
-        runOnBackground {
             when (call.method) {
                 "rotateImage" -> {
-                    launchRotateImage(call, result)
+                    mainScope.launch {
+                        launchRotateImage(call, result)
+                    }
                 }
                 else -> {
                     result.notImplemented()
                 }
             }
-        }
     }
 
     private fun launchRotateImage(call: MethodCall, result: MethodChannel.Result) {
@@ -89,14 +89,6 @@ class FlutterExifRotationPlugin : FlutterPlugin, MethodCallHandler {
 
     companion object {
         private const val channelName = "flutter_exif_rotation"
-
-        val threadPool: ExecutorService = Executors.newCachedThreadPool()
-
-        inline fun runOnBackground(crossinline block: () -> Unit) {
-            threadPool.execute {
-                block()
-            }
-        }
 
         private fun rotate(source: Bitmap, angle: Float): Bitmap {
             val matrix = Matrix()
