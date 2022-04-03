@@ -21,7 +21,6 @@ import java.util.concurrent.Executors
  */
 class FlutterExifRotationPlugin : FlutterPlugin, MethodCallHandler {
     private var applicationContext: Context? = null
-
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         applicationContext = binding.applicationContext
         val methodChannel = MethodChannel(binding.binaryMessenger, channelName)
@@ -90,7 +89,7 @@ class FlutterExifRotationPlugin : FlutterPlugin, MethodCallHandler {
     companion object {
         private const val channelName = "flutter_exif_rotation"
 
-        val threadPool: ExecutorService = Executors.newCachedThreadPool()
+        val threadPool: ExecutorService = Executors.newSingleThreadExecutor()
 
         inline fun runOnBackground(crossinline block: () -> Unit) {
             threadPool.execute {
