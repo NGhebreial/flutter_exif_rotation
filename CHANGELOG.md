@@ -1,3 +1,6 @@
+## 0.5.1
+* Fixing OutOfMemory exception when rotating multiple images by @mZadorskii
+
 ## 0.5.0
 
 * Migration to Kotlin implemented by @paricleu
