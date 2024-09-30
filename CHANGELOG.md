@@ -1,3 +1,6 @@
+## 0.5.2
+* Upgraded gradle by @javaddehban
+
 ## 0.5.1
 * Fixing OutOfMemory exception when rotating multiple images by @mZadorskii
 

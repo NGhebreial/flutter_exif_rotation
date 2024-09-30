@@ -1,7 +1,7 @@
 name: flutter_exif_rotation
 description:
   Flutter plugin that fixes the picture orientation when it's took in landscape for some devices.
-version: 0.5.1
+version: 0.5.2
 homepage: https://github.com/NGhebreial/flutter_exif_rotation
 repository: https://github.com/NGhebreial/flutter_exif_rotation
 
