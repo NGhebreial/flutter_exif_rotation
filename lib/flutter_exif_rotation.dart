@@ -13,38 +13,48 @@ class FlutterExifRotation {
   }
 
   /// Get the [path] of the image and fix the orientation.
-  /// Return the [File] with the exif data fixed
+  /// The original file is overwritten or saved to
+  /// [outputPath] if provided.
+  /// Return the [File] with the exif data fixed.
   static Future<File> rotateImage({
     required String path,
+    String? outputPath,
   }) async =>
       await _rotateImageInternal(
         path: path,
+        outputPath: outputPath,
         save: false,
       );
 
   /// Get the [path] of the image, fix the orientation and
   /// saves the file in the device.
+  /// The original file is overwritten or saved to
+  /// [outputPath] if provided.
   /// Return the [File] with the exif data fixed
   static Future<File> rotateAndSaveImage({
     required String path,
+    String? outputPath,
   }) async =>
       await _rotateImageInternal(
         path: path,
+        outputPath: outputPath,
         save: true,
       );
 
   static Future<File> _rotateImageInternal({
     required String path,
+    required String? outputPath,
     required bool save,
   }) async {
     String filePath = await (_channel.invokeMethod(
       'rotateImage',
       <String, dynamic>{
         'path': path,
+        'outputPath': outputPath,
         'save': false,
       },
     ));
 
-    return new File(filePath);
+    return File(outputPath ?? filePath);
   }
 }

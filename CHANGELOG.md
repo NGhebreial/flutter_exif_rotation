@@ -1,3 +1,8 @@
+## 0.6.0
+
+* BREAKING CHANGE: Android and iOS now have the same behavior for saving the fixed file. Both overwrite the existing one by default.
+* Added argument to allow specifying an output path to save the fixed image to instead of overwriting the existing one.
+
 ## 0.5.2
 * Upgraded gradle by @javaddehban
 

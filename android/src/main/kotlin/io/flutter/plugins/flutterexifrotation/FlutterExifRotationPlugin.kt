@@ -46,6 +46,7 @@ class FlutterExifRotationPlugin : FlutterPlugin, MethodCallHandler {
 
     private fun launchRotateImage(call: MethodCall, result: MethodChannel.Result) {
         val photoPath = call.argument<String>("path")
+        val outputPath = call.argument<String?>("outputPath") ?: photoPath
         val save = argument(call, "save", false)!!
         val orientation: Int
         try {
@@ -65,8 +66,7 @@ class FlutterExifRotationPlugin : FlutterPlugin, MethodCallHandler {
                 ExifInterface.ORIENTATION_NORMAL -> bitmap
                 else -> bitmap
             }
-            val file =
-                File(photoPath) // the File to save , append increasing numeric counter to prevent files from getting overwritten.
+            val file = File(outputPath) 
             val fOut = FileOutputStream(file)
             rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut)
             fOut.flush() // Not really required
