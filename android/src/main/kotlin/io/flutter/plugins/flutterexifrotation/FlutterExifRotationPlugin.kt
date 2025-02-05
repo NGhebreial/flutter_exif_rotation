@@ -83,6 +83,9 @@ class FlutterExifRotationPlugin : FlutterPlugin, MethodCallHandler {
         } catch (e: IOException) {
             result.error("error", "IOexception", null)
             e.printStackTrace()
+        } catch (e: NullPointerException) {
+            result.error("bitmap_decoding_error", "Bitmap could not be decoded: ${e.message}", null) 
+            e.printStackTrace()
         }
     }
 
