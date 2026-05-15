@@ -95,3 +95,9 @@ fabric.properties
 .DS_Store
 .atom/
 .vscode/
+
+example/ios/Flutter/Flutter.podspec
+example/ios/Flutter/flutter_export_environment.sh
+
+# SPM
+.swiftpm/
