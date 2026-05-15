@@ -1,10 +1,10 @@
 import Flutter
 import UIKit
 
-public class SwiftFlutterExifRotationPlugin: NSObject, FlutterPlugin {
+public class FlutterExifRotationPlugin: NSObject, FlutterPlugin {
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "flutter_exif_rotation", binaryMessenger: registrar.messenger())
-        let instance = SwiftFlutterExifRotationPlugin()
+        let instance = FlutterExifRotationPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
     

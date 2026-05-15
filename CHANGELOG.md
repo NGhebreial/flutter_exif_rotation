@@ -1,3 +1,6 @@
+## 0.6.0
+* Migration to Swift Package Management
+
 ## 0.5.2
 * Upgraded gradle by @javaddehban
 

@@ -95,3 +95,6 @@ fabric.properties
 .DS_Store
 .atom/
 .vscode/
+
+# SPM
+.swiftpm/

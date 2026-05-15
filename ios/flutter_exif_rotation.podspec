@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'flutter_exif_rotation'
-  s.version          = '0.3.0'
+  s.version          = '0.3.1'
   s.summary          = 'Flutter plugin that fixes the picture orientation'
   s.description      = <<-DESC
     Flutter plugin that fixes the picture orientation when taken in landscape for some devices.
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.license          = { :type => 'BSD' }
   s.author           = { 'Nadia Ghebreial' => 'nadiagnieto@gmail.com' }
   s.source           = { :git => 'https://github.com/NGhebreial/flutter_exif_rotation.git', :tag => 'v0.3.0' }
-  s.source_files = 'Classes/**/*'
+  s.source_files = 'flutter_exif_rotation/Source/flutter_exif_rotation/**/*'
   s.dependency 'Flutter'
   s.platform = :ios, '9.0'
 
